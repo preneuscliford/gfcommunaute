@@ -1,4 +1,6 @@
 import { ClerkProvider } from "@clerk/nextjs";
+import { frFR } from "@clerk/localizations";
+
 import { Inter } from "next/font/google";
 
 import "../globals.css";
@@ -16,7 +18,7 @@ export default function RouteLayout({
   children: React.ReactNode;
 }) {
   return (
-    <ClerkProvider>
+    <ClerkProvider localization={frFR}>
       <html lang="fr">
         <body className={`${inter.className} bg-dark-1`}>{children}</body>
       </html>
