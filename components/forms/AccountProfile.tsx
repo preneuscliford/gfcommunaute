@@ -95,7 +95,7 @@ const AccountProfile = ({ user, btnTitle }: Props) => {
     } catch (error) {
       console.error("Error updating user:", error);
       displayErrorMessage(
-        "An error occurred while updating user. Please try again later."
+        "Une erreur s'est produite lors de la mise à jour de l'utilisateur. Veuillez réessayer plus tard."
       );
     }
   };
@@ -174,7 +174,7 @@ const AccountProfile = ({ user, btnTitle }: Props) => {
           render={({ field }) => (
             <FormItem className="flex w-full flex-col gap-3">
               <FormLabel className="text-base-semibold text-light-2">
-                Name
+                Nom
               </FormLabel>
               <FormMessage />
               <FormControl>
@@ -195,7 +195,7 @@ const AccountProfile = ({ user, btnTitle }: Props) => {
           render={({ field }) => (
             <FormItem className="flex w-full flex-col gap-3">
               <FormLabel className="text-base-semibold text-light-2">
-                Username
+                Nom d'utilisateur
               </FormLabel>
               <FormMessage />
               <FormControl>
