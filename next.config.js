@@ -1,4 +1,20 @@
 /** @type {import('next').NextConfig} */
+
+const withPWA = require("next-pwa")({
+  dest: "public",
+});
+
+module.exports = withPWA({
+  reactStrictMode: true,
+  pwa: {
+    dest: "public",
+    disable: process.env.NODE_ENV === "development",
+    register: true,
+    skitWaiting: true,
+    appleMobileWebAppCapable: "yes",
+  },
+});
+
 const nextConfig = {
   typescript: {
     ignoreBuildErrors: true,
