@@ -8,6 +8,10 @@
     @apply flex min-h-screen flex-1 flex-col items-center bg-dark-1 px-6 pb-10 pt-28 max-md:pb-32 sm:px-10;
   }
 
+  .cl-organizationSwitcherPopoverMain 🔒️ .cl-internal-fbnt3p {
+    background-color: brown;
+  }
+
   /* Head Text */
   .head-text {
     @apply text-heading2-bold text-light-1;

@@ -7,6 +7,7 @@ import { connectToDB } from "../mongoose";
 import User from "../models/user.model";
 import Thread from "../models/thread.model";
 import Community from "../models/community.model";
+import { NextApiRequest, NextApiResponse } from "next";
 
 export async function fetchPosts(pageNumber = 1, pageSize = 20) {
   connectToDB();
@@ -49,14 +50,44 @@ export async function fetchPosts(pageNumber = 1, pageSize = 20) {
 }
 
 interface Params {
-  text: string,
-  author: string,
-  communityId: string | null,
-  path: string,
+  text: string;
+  author: string;
+  communityId: string | null;
+  path: string;
 }
 
-export async function createThread({ text, author, communityId, path }: Params
+export default async function addLikeToThread(
+  req: NextApiRequest,
+  res: NextApiResponse
 ) {
+  try {
+    const { threadId, userId } = req.body;
+
+    const thread = await Thread.findById(threadId);
+    if (!thread) {
+      return res.status(404).json({ error: "Le fil n'a pas été trouvé" });
+    }
+
+    // Vérifiez si l'utilisateur n'a pas déjà aimé ce fil
+    if (!thread.likedBy.includes(userId)) {
+      thread.likes += 1;
+      thread.likedBy.push(userId);
+      await thread.save();
+      res.status(200).json({ message: "Like ajouté avec succès" });
+    } else {
+      res.status(400).json({ error: "L'utilisateur a déjà aimé ce fil" });
+    }
+  } catch (error) {
+    res.status(500).json({ error: "Erreur lors de l'ajout du like" });
+  }
+}
+
+export async function createThread({
+  text,
+  author,
+  communityId,
+  path,
+}: Params) {
   try {
     connectToDB();
 

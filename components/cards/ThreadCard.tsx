@@ -105,14 +105,17 @@ function ThreadCard({
 
               {isComment && comments.length > 0 && (
                 <Link href={`/thread/${id}`}>
+                  {formatDateString(createdAt)}
                   <p className="mt-1 text-subtle-medium text-gray-1">
                     {comments.length} remplacer
                     {comments.length > 1 ? "ies" : "y"}
                   </p>
                 </Link>
               )}
+              {/* <p className="text-subtle-medium text-lime-50">like</p> */}
             </div>
           </div>
+          {/* signale button */}
         </div>
 
         <DeleteThread
@@ -138,13 +141,22 @@ function ThreadCard({
           ))}
 
           <Link href={`/thread/${id}`}>
-            <p className="mt-1 text-subtle-medium text-gray-1">
-              {comments.length} remplacer{comments.length > 1 ? "ies" : "y"}
-            </p>
+            <div className=" flex ">
+              <p className="mt-1 text-subtle-medium text-gray-1">
+                {comments.length} commentair{comments.length > 1 ? "es" : "e"}
+              </p>
+
+              {/* <p className="text-subtle-medium text-gray-1">like</p> */}
+            </div>
           </Link>
         </div>
       )}
-
+      <br />
+      {!community && (
+        <p className="text-subtle-medium text-light-1">
+          {formatDateString(createdAt)}
+        </p>
+      )}
       {!isComment && community && (
         <Link
           href={`/communities/${community.id}`}

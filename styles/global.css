@@ -1,0 +1,19 @@
+.cl-internal-11ewti4 {
+  box-sizing: inherit;
+  display: flex;
+  flex-flow: row;
+  -webkit-box-align: stretch;
+  align-items: stretch;
+  -webkit-box-pack: start;
+  justify-content: flex-start;
+  flex-shrink: 0;
+  border-radius: 50%;
+  overflow: hidden;
+  width: 4rem;
+  height: 4rem;
+  background-color: rgba(0, 0, 0, 0.24);
+  background-clip: padding-box;
+  position: relative;
+  box-shadow: var(--cl-shimmer-hover-shadow);
+  transition: box-shadow 280ms ease-out 0s;
+}
