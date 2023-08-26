@@ -28,6 +28,7 @@ import Image from "next/image";
 import { UserValidation } from "@/lib/validations/user";
 import { ThreadValidation } from "@/lib/validations/thread";
 import { createThread } from "@/lib/actions/thread.actions";
+import { threadId } from "worker_threads";
 
 interface Props {
   user: {
@@ -39,6 +40,7 @@ interface Props {
     image: string;
   };
   btnTitle: string;
+  likes: number;
 }
 
 function PostThreads({ userId }: { userId: string }) {

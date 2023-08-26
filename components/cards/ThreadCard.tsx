@@ -3,6 +3,8 @@ import Link from "next/link";
 
 import { formatDateString } from "@/lib/utils";
 import DeleteThread from "../forms/DeleteThread";
+import LikeButton from "../forms/LikeButton";
+import { threadId } from "worker_threads";
 
 interface Props {
   id: string;
@@ -20,6 +22,7 @@ interface Props {
     image: string;
   } | null;
   createdAt: string;
+
   comments: {
     author: {
       image: string;
@@ -57,6 +60,7 @@ function ThreadCard({
               />
             </Link>
 
+            {/* threads, currentUserId */}
             <div className="thread-card_bar" />
           </div>
 
@@ -71,13 +75,8 @@ function ThreadCard({
 
             <div className={`${isComment && "mb-10"} mt-5 flex flex-col gap-3`}>
               <div className="flex gap-3.5">
-                <Image
-                  src="/assets/heart-gray.svg"
-                  alt="heart"
-                  width={24}
-                  height={24}
-                  className="cursor-pointer object-contain"
-                />
+                {/* like button */}
+                <LikeButton threadId={id} userId={currentUserId} />
                 <Link href={`/thread/${id}`}>
                   <Image
                     src="/assets/reply.svg"
@@ -107,8 +106,8 @@ function ThreadCard({
                 <Link href={`/thread/${id}`}>
                   {formatDateString(createdAt)}
                   <p className="mt-1 text-subtle-medium text-gray-1">
-                    {comments.length} remplacer
-                    {comments.length > 1 ? "ies" : "y"}
+                    {comments.length} commentair
+                    {comments.length > 1 ? "e" : "s"}
                   </p>
                 </Link>
               )}
@@ -141,7 +140,7 @@ function ThreadCard({
           ))}
 
           <Link href={`/thread/${id}`}>
-            <div className=" flex ">
+            <div className=" ">
               <p className="mt-1 text-subtle-medium text-gray-1">
                 {comments.length} commentair{comments.length > 1 ? "es" : "e"}
               </p>
@@ -152,7 +151,7 @@ function ThreadCard({
         </div>
       )}
       <br />
-      {!community && (
+      {!community && !isComment && (
         <p className="text-subtle-medium text-light-1">
           {formatDateString(createdAt)}
         </p>

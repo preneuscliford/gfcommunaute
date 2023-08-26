@@ -7,7 +7,7 @@ import { connectToDB } from "../mongoose";
 import User from "../models/user.model";
 import Thread from "../models/thread.model";
 import Community from "../models/community.model";
-import { NextApiRequest, NextApiResponse } from "next";
+import { link } from "fs";
 
 export async function fetchPosts(pageNumber = 1, pageSize = 20) {
   connectToDB();
@@ -56,32 +56,6 @@ interface Params {
   path: string;
 }
 
-export default async function addLikeToThread(
-  req: NextApiRequest,
-  res: NextApiResponse
-) {
-  try {
-    const { threadId, userId } = req.body;
-
-    const thread = await Thread.findById(threadId);
-    if (!thread) {
-      return res.status(404).json({ error: "Le fil n'a pas été trouvé" });
-    }
-
-    // Vérifiez si l'utilisateur n'a pas déjà aimé ce fil
-    if (!thread.likedBy.includes(userId)) {
-      thread.likes += 1;
-      thread.likedBy.push(userId);
-      await thread.save();
-      res.status(200).json({ message: "Like ajouté avec succès" });
-    } else {
-      res.status(400).json({ error: "L'utilisateur a déjà aimé ce fil" });
-    }
-  } catch (error) {
-    res.status(500).json({ error: "Erreur lors de l'ajout du like" });
-  }
-}
-
 export async function createThread({
   text,
   author,
@@ -99,7 +73,9 @@ export async function createThread({
     const createdThread = await Thread.create({
       text,
       author,
-      community: communityIdObject, // Assign communityId if provided, or leave it null for personal account
+      community: communityIdObject,
+
+      // Assign communityId if provided, or leave it null for personal account
     });
 
     // Update User model
@@ -197,29 +173,16 @@ export async function fetchThreadById(threadId: string) {
         path: "author",
         model: User,
         select: "_id id name image",
-      }) // Populate the author field with _id and username
+      })
       .populate({
         path: "community",
         model: Community,
         select: "_id id name image",
-      }) // Populate the community field with _id and name
+      })
       .populate({
-        path: "children", // Populate the children field
+        path: "children",
         populate: [
-          {
-            path: "author", // Populate the author field within children
-            model: User,
-            select: "_id id name parentId image", // Select only _id and username fields of the author
-          },
-          {
-            path: "children", // Populate the children field within children
-            model: Thread, // The model of the nested children (assuming it's the same "Thread" model)
-            populate: {
-              path: "author", // Populate the author field within nested children
-              model: User,
-              select: "_id id name parentId image", // Select only _id and username fields of the author
-            },
-          },
+          // ... autres champs existants
         ],
       })
       .exec();
@@ -269,3 +232,48 @@ export async function addCommentToThread(
     throw new Error("Unable to add comment");
   }
 }
+
+// ...
+
+// ...
+
+// ...  it's wprkk
+
+export async function addLikeToThread(threadId: string, userId: string) {
+  try {
+    connectToDB();
+
+    const thread = await Thread.findById(threadId);
+
+    if (!thread) {
+      throw new Error("Thread not found");
+    }
+
+    if (!thread.likedBy.includes(userId)) {
+      thread.likes++;
+      await thread.updateOne({
+        $push: { likedBy: userId },
+      });
+      // Mise à jour locale
+      await thread.save();
+
+      return thread;
+    } else {
+      thread.likes--;
+      await thread.updateOne({
+        $pull: { likedBy: userId },
+      });
+
+      // Mise à jour locale
+      await thread.save();
+
+      console.log(thread);
+
+      return thread;
+    }
+  } catch (error: any) {
+    throw new Error(`Failed to update like for thread: ${error.message}`);
+  }
+}
+
+// ...
