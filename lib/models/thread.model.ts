@@ -1,5 +1,6 @@
 import mongoose from "mongoose";
 
+// Définition du schéma de thread
 const threadSchema = new mongoose.Schema({
   text: {
     type: String,
@@ -34,6 +35,6 @@ const threadSchema = new mongoose.Schema({
   likedBy: [{ type: String }],
 });
 
+// Définition et export du modèle "Thread"
 const Thread = mongoose.models.Thread || mongoose.model("Thread", threadSchema);
-
 export default Thread;

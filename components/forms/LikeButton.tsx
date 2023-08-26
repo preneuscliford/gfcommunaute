@@ -5,19 +5,28 @@ import { addLikeToThread, fetchThreadById } from "@/lib/actions/thread.actions";
 
 interface Props {
   threadId: string;
-  userId: string; // Ajoutez cette prop pour stocker le nombre initial de likes
+  userId: string;
+  likedBy: string[];
 }
 
-const LikeButton = ({ threadId, userId }: Props) => {
-  const [isLiked, setIsLiked] = useState(false);
-  const [like, setLike] = useState(0);
+const LikeButton = ({ threadId, userId, likedBy }: Props) => {
+  const [isLiked, setIsLiked] = useState(
+    typeof window !== "undefined"
+      ? localStorage.getItem(`likeStatus-${threadId}`) === "liked"
+      : false
+  );
+  const [like, setLike] = useState(likedBy.length);
 
   useEffect(() => {
     const fetchInitialData = async () => {
       try {
-        const thread = await fetchThreadById(threadId); // Utilisez la fonction pour obtenir les détails du fil de discussion
-        setLike(thread.likes.length); // Mettez à jour avec la longueur du tableau de likes
-        setIsLiked(thread.likes.includes(userId));
+        const thread = await fetchThreadById(threadId);
+
+        // Vérifier si l'utilisateur actuel (userId) est dans le tableau likedBy
+        setIsLiked(thread.likedBy.includes(userId));
+
+        // Mettre à jour le nombre total de likes
+        setLike(thread.likedBy.length);
       } catch (error) {
         console.error("Error fetching initial data:", error);
       }
@@ -28,9 +37,21 @@ const LikeButton = ({ threadId, userId }: Props) => {
 
   const handleLike = async () => {
     try {
-      await addLikeToThread(threadId, userId);
-      setLike((prevLike) => (isLiked ? prevLike - 1 : prevLike + 1));
+      const updatedThread = await addLikeToThread(threadId, userId, likedBy);
+
+      // Mettre à jour le nombre de likes affiché en utilisant la propriété "likes" de "updatedThread"
+      setLike(updatedThread.likes);
+
+      // Inverser l'état "isLiked"
       setIsLiked(!isLiked);
+
+      // Mettre à jour le stockage local avec l'état de like actuel
+      localStorage.setItem(
+        `likeStatus-${threadId}`,
+        !isLiked ? "liked" : "unliked"
+      );
+
+      console.log("Like added to thread", threadId, userId, likedBy);
     } catch (error) {
       console.error("Error while handling like:", error);
     }
@@ -40,7 +61,7 @@ const LikeButton = ({ threadId, userId }: Props) => {
     <div className="">
       <div onClick={handleLike}>
         <Image
-          src={`/assets/heart.png`} // Utilisez '.png' pour l'image liked et '.svg' pour l'image not liked
+          src={`/assets/heart.png`}
           alt="heart"
           width={24}
           height={24}
@@ -49,7 +70,7 @@ const LikeButton = ({ threadId, userId }: Props) => {
       </div>
       <div className=" absolute ">
         <p className="text-gray-1 mt-[5px] text-subtle-medium">
-          {like} lik{like > 1 ? "s" : "e"}
+          {like} lik{like > 1 ? "es" : "e"}
         </p>
       </div>
     </div>

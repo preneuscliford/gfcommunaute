@@ -7,7 +7,6 @@ import { connectToDB } from "../mongoose";
 import User from "../models/user.model";
 import Thread from "../models/thread.model";
 import Community from "../models/community.model";
-import { link } from "fs";
 
 export async function fetchPosts(pageNumber = 1, pageSize = 20) {
   connectToDB();
@@ -239,7 +238,11 @@ export async function addCommentToThread(
 
 // ...  it's wprkk
 
-export async function addLikeToThread(threadId: string, userId: string) {
+export async function addLikeToThread(
+  threadId: string,
+  userId: string,
+  likedBy: string[]
+) {
   try {
     connectToDB();
 
@@ -250,19 +253,21 @@ export async function addLikeToThread(threadId: string, userId: string) {
     }
 
     if (!thread.likedBy.includes(userId)) {
-      thread.likes++;
+      thread.likes++; // Ajouter simplement 1 au nombre de likes
       await thread.updateOne({
         $push: { likedBy: userId },
       });
       // Mise à jour locale
       await thread.save();
-
+      likedBy = [userId];
       return thread;
     } else {
       thread.likes--;
       await thread.updateOne({
         $pull: { likedBy: userId },
       });
+
+      likedBy = [userId];
 
       // Mise à jour locale
       await thread.save();
