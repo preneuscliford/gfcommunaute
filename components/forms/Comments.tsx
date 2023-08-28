@@ -31,9 +31,10 @@ interface Props {
   threadId: string;
   currentUserImg: string;
   currentUserId: string;
+  likedBy: string[];
 }
 
-function Comment({ threadId, currentUserImg, currentUserId }: Props) {
+function Comment({ threadId, currentUserImg, currentUserId, likedBy }: Props) {
   const pathname = usePathname();
 
   const form = useForm<z.infer<typeof CommentValidation>>({
@@ -56,11 +57,11 @@ function Comment({ threadId, currentUserImg, currentUserId }: Props) {
     try {
       if (isLiked) {
         // Si déjà liké, retirer le like
-        await addLikeToThread(threadId, currentUserId); // Utilisez la fonction pour retirer un like
+        await addLikeToThread(threadId, currentUserId, likedBy); // Utilisez la fonction pour retirer un like
         setLikeCount(likeCount - 1);
       } else {
         // Sinon, ajouter le like
-        await addLikeToThread(threadId, currentUserId); // Utilisez la fonction pour ajouter un like
+        await addLikeToThread(threadId, currentUserId, likedBy); // Utilisez la fonction pour ajouter un like
         setLikeCount(likeCount + 1);
       }
       setIsLiked(!isLiked);

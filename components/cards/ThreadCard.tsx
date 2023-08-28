@@ -1,10 +1,11 @@
 import Image from "next/image";
 import Link from "next/link";
 
+import { utcToZonedTime } from "date-fns-tz";
+
 import { formatDateString } from "@/lib/utils";
 import DeleteThread from "../forms/DeleteThread";
 import LikeButton from "../forms/LikeButton";
-import { threadId } from "worker_threads";
 
 interface Props {
   id: string;
@@ -16,6 +17,7 @@ interface Props {
     image: string;
     id: string;
   };
+  authorImage: string;
   community: {
     id: string;
     name: string;
@@ -43,7 +45,15 @@ function ThreadCard({
   comments,
   isComment,
   likes,
+  authorImage,
 }: Props) {
+  const dateInGuyaneTimezone = utcToZonedTime(
+    new Date(createdAt),
+    "America/Cayenne"
+  );
+
+  const formattedDate = formatDateString(dateInGuyaneTimezone.toISOString());
+
   return (
     <article
       className={`flex w-full flex-col rounded-xl ${
@@ -75,46 +85,64 @@ function ThreadCard({
 
             <p className="mt-2 text-small-regular text-light-2">{content}</p>
 
+            <div className="">
+              <Image
+                src={authorImage}
+                alt="heart"
+                width={24}
+                height={24}
+                className="cursor-pointer object-contain"
+              />
+            </div>
+
             <div className={`${isComment && "mb-10"} mt-5 flex flex-col gap-3`}>
-              <div className="flex gap-3.5">
+              <div className="flex gap-10">
                 {/* like button */}
+
                 <LikeButton
                   threadId={id}
                   userId={currentUserId}
                   likedBy={currentUserId}
                   likes={likes}
                 />
-                <Link href={`/thread/${id}`}>
+
+                <Link
+                  href={`/thread/${id}`}
+                  className="flex justify-center items-center"
+                >
                   <Image
                     src="/assets/reply.svg"
                     alt="heart"
                     width={24}
                     height={24}
-                    className="cursor-pointer object-contain"
+                    className=" cursor-pointer object-contain"
                   />
+                  <p className=" text-subtle-medium text-gray-1">
+                    {comments.length} {comments.length > 1 ? "" : ""}
+                  </p>
                 </Link>
-                <Image
+                {/* <Image
                   src="/assets/repost.svg"
                   alt="heart"
                   width={24}
                   height={24}
                   className="cursor-pointer object-contain"
-                />
-                <Image
+                /> */}
+                {/* <Image
                   src="/assets/share.svg"
                   alt="heart"
                   width={24}
                   height={24}
                   className="cursor-pointer object-contain"
-                />
+                /> */}
               </div>
 
               {isComment && comments.length > 0 && (
                 <Link href={`/thread/${id}`}>
                   {formatDateString(createdAt)}
                   <p className="mt-1 text-subtle-medium text-gray-1">
-                    {comments.length} commentair
-                    {comments.length > 1 ? "e" : "s"}
+                    {comments.length} répons
+                    {comments.length > 1 ? "es" : "e"}
                   </p>
                 </Link>
               )}
@@ -149,7 +177,7 @@ function ThreadCard({
           <Link href={`/thread/${id}`}>
             <div className=" ">
               <p className="mt-1 text-subtle-medium text-gray-1">
-                {comments.length} commentair{comments.length > 1 ? "es" : "e"}
+                {/* {comments.length} commentair{comments.length > 1 ? "e" : "s"} */}
               </p>
 
               {/* <p className="text-subtle-medium text-gray-1">like</p> */}
@@ -159,9 +187,7 @@ function ThreadCard({
       )}
       <br />
       {!community && !isComment && (
-        <p className="text-subtle-medium text-light-1">
-          {formatDateString(createdAt)}
-        </p>
+        <p className="text-subtle-medium text-light-1">{formattedDate}</p>
       )}
       {!isComment && community && (
         <Link
@@ -169,7 +195,7 @@ function ThreadCard({
           className="mt-5 flex items-center"
         >
           <p className="text-subtle-medium text-light-1">
-            {formatDateString(createdAt)}
+            {formattedDate}
             {community && ` - ${community.name} Community`}
           </p>
 

@@ -19,6 +19,8 @@ import { Textarea } from "@/components/ui/textarea";
 
 import { ThreadValidation } from "@/lib/validations/thread";
 import { createThread } from "@/lib/actions/thread.actions";
+import { Input } from "../ui/input";
+import { useState } from "react";
 
 interface Props {
   userId: string;
@@ -64,15 +66,21 @@ function PostThread({ userId }: Props) {
                 Contenu
               </FormLabel>
               <FormControl className="no-focus border border-dark-4 bg-dark-3 text-light-1">
-                <Textarea rows={15} {...field} />
+                <Textarea rows={1} {...field} />
               </FormControl>
+              <Input
+                type="file"
+                accept="image/*"
+                placeholder="Add profile photo"
+                className="account-form_image-input"
+              />
               <FormMessage />
             </FormItem>
           )}
         />
 
         <Button type="submit" className="bg-primary-500">
-          Post
+          Créer
         </Button>
       </form>
     </Form>

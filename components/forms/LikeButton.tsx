@@ -58,7 +58,7 @@ const LikeButton = ({ threadId, userId, likedBy }: Props) => {
   };
 
   return (
-    <div className="">
+    <div className=" flex justify-center items-center gap-1">
       <div onClick={handleLike}>
         <Image
           src={`/assets/heart.png`}
@@ -68,11 +68,8 @@ const LikeButton = ({ threadId, userId, likedBy }: Props) => {
           className="cursor-pointer object-contain"
         />
       </div>
-      <div className=" absolute ">
-        <p className="text-gray-1 mt-[5px] text-subtle-medium">
-          {like} lik{like > 1 ? "es" : "e"}
-        </p>
-      </div>
+
+      <p className="text-gray-1  text-subtle-medium">{like}</p>
     </div>
   );
 };

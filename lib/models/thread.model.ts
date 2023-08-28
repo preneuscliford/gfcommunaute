@@ -11,6 +11,11 @@ const threadSchema = new mongoose.Schema({
     ref: "User",
     required: true,
   },
+  authorImage: {
+    // Nouvelle propriété pour l'image de l'auteur
+    type: String,
+    required: false,
+  },
   community: {
     type: mongoose.Schema.Types.ObjectId,
     ref: "Community",
