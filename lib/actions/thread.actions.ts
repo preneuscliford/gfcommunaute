@@ -50,6 +50,7 @@ export async function fetchPosts(pageNumber = 1, pageSize = 20) {
 
 interface Params {
   text: string;
+  theadImage: string;
   author: string;
   communityId: string | null;
   path: string;
@@ -57,6 +58,7 @@ interface Params {
 
 export async function createThread({
   text,
+  theadImage,
   author,
   communityId,
   path,
@@ -73,6 +75,7 @@ export async function createThread({
       text,
       author,
       community: communityIdObject,
+      theadImage,
 
       // Assign communityId if provided, or leave it null for personal account
     });

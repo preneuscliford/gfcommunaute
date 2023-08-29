@@ -12,12 +12,12 @@ interface Props {
   currentUserId: string;
   parentId: string | null;
   content: string;
+  theadImage: string;
   author: {
     name: string;
     image: string;
     id: string;
   };
-  authorImage: string;
   community: {
     id: string;
     name: string;
@@ -39,13 +39,13 @@ function ThreadCard({
   currentUserId,
   parentId,
   content,
+  theadImage,
   author,
   community,
   createdAt,
   comments,
   isComment,
   likes,
-  authorImage,
 }: Props) {
   const dateInGuyaneTimezone = utcToZonedTime(
     new Date(createdAt),
@@ -83,16 +83,19 @@ function ThreadCard({
               </h4>
             </Link>
 
-            <p className="mt-2 text-small-regular text-light-2">{content}</p>
+            <p className="mt-2 text-small-regular text-light-2 ">{content}</p>
 
-            <div className="">
-              <Image
-                src={authorImage}
-                alt="heart"
-                width={24}
-                height={24}
-                className="cursor-pointer object-contain"
-              />
+            <div className=" mt-3 ">
+              {theadImage && (
+                <Image
+                  className="object-cover rounded-md"
+                  src={theadImage}
+                  quality={100}
+                  alt="thread_image"
+                  width={400}
+                  height={400}
+                />
+              )}
             </div>
 
             <div className={`${isComment && "mb-10"} mt-5 flex flex-col gap-3`}>

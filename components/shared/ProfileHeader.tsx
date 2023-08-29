@@ -1,3 +1,4 @@
+/* eslint-disable react/no-unescaped-entities */
 import Link from "next/link";
 import Image from "next/image";
 import { UserButton, UserProfile } from "@clerk/nextjs";
@@ -26,9 +27,21 @@ function ProfileHeader({
     <div className="flex w-full flex-col justify-start">
       <div className="flex items-center justify-between">
         <div className="flex items-center gap-2">
-          <div className="top-7 left-8">
-            <UserButton />
-          </div>
+          {accountId === authUserId && (
+            <div className="top-7 left-8">
+              <UserButton />
+            </div>
+          )}
+          {accountId !== authUserId && (
+            <div className="relative h-20 w-20 object-cover">
+              <Image
+                src={imgUrl}
+                alt="logo"
+                fill
+                className="rounded-full object-cover shadow-2xl"
+              />
+            </div>
+          )}
 
           <div className="flex-1">
             <h2 className="text-left text-heading3-bold text-light-1">

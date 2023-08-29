@@ -43,10 +43,6 @@ const LeftSidebar = () => {
       </div>
 
       <div className="mt-10 px-6">
-        <p className="p-4 text-slate-50 text-base-regular max-lg:hidden">
-          terms et politique <br /> de confidentialite
-        </p>
-        <br />
         <SignedIn>
           <SignOutButton signOutCallback={() => router.push("/sign-in")}>
             <div className="flex cursor-pointer gap-4 p-4">

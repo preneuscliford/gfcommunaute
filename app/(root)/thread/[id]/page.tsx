@@ -32,6 +32,8 @@ async function page({ params }: { params: { id: string } }) {
           community={thread.community}
           createdAt={thread.createdAt}
           comments={thread.children}
+          likes={0}
+          theadImage={thread.theadImage}
         />
       </div>
 
@@ -56,6 +58,8 @@ async function page({ params }: { params: { id: string } }) {
             createdAt={childItem.createdAt}
             comments={childItem.children}
             isComment
+            likes={0}
+            theadImage={thread.theadImage}
           />
         ))}
       </div>

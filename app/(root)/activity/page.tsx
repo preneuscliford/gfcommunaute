@@ -42,8 +42,8 @@ async function Page() {
             ))}
           </>
         ) : (
-          <p className="!text-base-regular text-light-3">
-            Aucune activité pour le moment
+          <p className="p-4 text-slate-50 text-base-regular max-lg:hidden">
+            terms et politique de confidentialite
           </p>
         )}
       </section>
