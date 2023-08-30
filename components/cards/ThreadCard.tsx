@@ -6,6 +6,7 @@ import { utcToZonedTime } from "date-fns-tz";
 import { formatDateString } from "@/lib/utils";
 import DeleteThread from "../forms/DeleteThread";
 import LikeButton from "../forms/LikeButton";
+import ShowImage from "../forms/ShowImage";
 
 interface Props {
   id: string;
@@ -57,7 +58,7 @@ function ThreadCard({
   return (
     <article
       className={`flex w-full flex-col rounded-xl  ${
-        isComment ? "px-0 xs:px-7" : "bg-dark-2 p-2"
+        isComment ? "px-0 xs:px-7" : "bg-dark-2 p-4"
       }`}
     >
       <div className="flex items-start justify-between">
@@ -76,27 +77,16 @@ function ThreadCard({
             <div className="thread-card_bar" />
           </div>
 
-          <div className="flex w-full flex-col">
+          <div className="flex w-full flex-col ">
             <Link href={`/profile/${author.id}`} className="w-fit">
-              <h4 className="cursor-pointer text-base-semibold text-light-1">
+              <h4 className="cursor-pointer text-base-semibold text-light-1 mt-2.5">
                 {author.name}
               </h4>
             </Link>
 
             <p className="mt-2 text-small-regular text-light-2 ">{content}</p>
 
-            <div className=" mt-3 ">
-              {theadImage && (
-                <Image
-                  className="object-cover rounded-md"
-                  src={theadImage}
-                  quality={100}
-                  alt="thread_image"
-                  width={800}
-                  height={300}
-                />
-              )}
-            </div>
+            <ShowImage theadImage={theadImage} />
 
             <div className={`${isComment && "mb-10"} mt-5 flex flex-col gap-3`}>
               <div className="flex gap-10">

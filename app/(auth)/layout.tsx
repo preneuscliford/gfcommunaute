@@ -27,7 +27,7 @@ export default async function RootLayout({
     >
       <html lang="fr">
         <body
-          className={`${inter.className} bg-dark-1 flex items-center justify-center`}
+          className={`${inter.className} bg-dark-1 flex items-center justify-center overflow-hidden`}
         >
           {children}
         </body>
