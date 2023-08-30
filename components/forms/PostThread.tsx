@@ -5,7 +5,6 @@ import { useForm } from "react-hook-form";
 import { useOrganization } from "@clerk/nextjs";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { usePathname, useRouter } from "next/navigation";
-
 import {
   Form,
   FormControl,
@@ -16,12 +15,10 @@ import {
 } from "@/components/ui/form";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
-
 import { ThreadValidation } from "@/lib/validations/thread";
 import { createThread } from "@/lib/actions/thread.actions";
 import { Input } from "../ui/input";
 import { ChangeEvent, useState } from "react";
-
 import { useUploadThing } from "@/lib/uploadthing";
 import { isBase64Image } from "@/lib/utils";
 import Image from "next/image";
@@ -39,12 +36,10 @@ function PostThread({ userId }: Props) {
   const { startUpload } = useUploadThing("media");
 
   const [files, setFiles] = useState<File[]>([]);
-
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
 
   const displayErrorMessage = (message: string) => {
     setErrorMessage(message);
-
     setTimeout(() => {
       setErrorMessage(null);
     }, 3000);
@@ -55,10 +50,9 @@ function PostThread({ userId }: Props) {
     defaultValues: {
       thread: "",
       accountId: userId,
-      theadImage: undefined, // Set theadImage to undefined by default
+      theadImage: undefined,
     },
   });
-  const [uploadedImage, setUploadedImage] = useState<string | null>(null);
 
   const handleImage = (
     e: ChangeEvent<HTMLInputElement>,
@@ -101,7 +95,7 @@ function PostThread({ userId }: Props) {
         author: userId,
         communityId: organization ? organization.id : null,
         path: pathname,
-        theadImage: values.theadImage || "", // Ensure theadImage is a string
+        theadImage: values.theadImage || "",
       });
 
       router.push("/");
@@ -112,8 +106,6 @@ function PostThread({ userId }: Props) {
       );
     }
   };
-
-  // ... (autres variables d'état et fonctions)
 
   const [previewImage, setPreviewImage] = useState<string | null>(null);
 
@@ -134,7 +126,7 @@ function PostThread({ userId }: Props) {
       fileReader.onload = async (event) => {
         const imageDataUrl = event.target?.result?.toString() || "";
         fieldChange(imageDataUrl);
-        setPreviewImage(imageDataUrl); // Met à jour la prévisualisation de l'image
+        setPreviewImage(imageDataUrl);
       };
 
       fileReader.readAsDataURL(file);
@@ -155,11 +147,7 @@ function PostThread({ userId }: Props) {
               <FormLabel className="text-base-semibold text-light-2">
                 Contenu
               </FormLabel>
-              <FormControl
-                className="no-focus border-t-dark-1 border-x-dark-1 bg-dark-1 text-light-1
-              border-b-gray-200
-              "
-              >
+              <FormControl className="no-focus border-t-dark-1 border-x-dark-1 bg-dark-1 text-light-1 border-b-gray-200">
                 <Textarea rows={1} {...field} placeholder="votre message" />
               </FormControl>
               <Input
@@ -174,7 +162,6 @@ function PostThread({ userId }: Props) {
                 }
               />
               {previewImage && (
-                // Utilise <Image /> pour afficher la prévisualisation de l'image
                 <div>
                   <Image
                     src={previewImage}
@@ -182,11 +169,10 @@ function PostThread({ userId }: Props) {
                     layout="responsive"
                     width={300}
                     height={200}
-                    className=" rounded-md"
+                    className="rounded-md"
                   />
                 </div>
               )}
-
               <FormMessage />
             </FormItem>
           )}
