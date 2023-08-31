@@ -35,7 +35,7 @@ export default function RootLayout({
     >
       <html lang="en">
         <body className={inter.className}>
-          <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
+          <ThemeProvider attribute="class" defaultTheme="dark" enableSystem>
             <Topbar />
 
             <main className="flex flex-row">

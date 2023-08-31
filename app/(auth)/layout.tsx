@@ -29,7 +29,7 @@ export default async function RootLayout({
     >
       <html lang="fr">
         <body
-          className={`${inter.className} bg-dark-1 flex items-center justify-center overflow-hidden`}
+          className={`${inter.className} bg-dark-1 flex items-center justify-center`}
         >
           <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
             {children}
