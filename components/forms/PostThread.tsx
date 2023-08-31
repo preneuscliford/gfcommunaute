@@ -2,7 +2,7 @@
 
 import * as z from "zod";
 import { useForm } from "react-hook-form";
-import { useOrganization } from "@clerk/nextjs";
+import { ClerkLoading, useOrganization } from "@clerk/nextjs";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { usePathname, useRouter } from "next/navigation";
 import {
@@ -168,7 +168,7 @@ function PostThread({ userId }: Props) {
                     alt="Preview"
                     layout="responsive"
                     width={300}
-                    height={200}
+                    height={100}
                     className="rounded-md"
                   />
                 </div>

@@ -34,7 +34,7 @@ function ShowImage({ theadImage }: Props) {
         />
       </div>
       <Image
-        className="rounded-md mt-2"
+        className="rounded-md mt-2 "
         src={theadImage}
         alt="thread_image"
         width={500}

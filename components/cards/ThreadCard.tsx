@@ -7,6 +7,7 @@ import { formatDateString } from "@/lib/utils";
 import DeleteThread from "../forms/DeleteThread";
 import LikeButton from "../forms/LikeButton";
 import ShowImage from "../forms/ShowImage";
+import SignaledUsers from "../forms/SignaledUsers";
 
 interface Props {
   id: string;
@@ -77,7 +78,12 @@ function ThreadCard({
             <div className="thread-card_bar" />
           </div>
 
-          <div className="flex w-full flex-col ">
+          <div className="flex w-full flex-col relative">
+            {author.id !== currentUserId && (
+              <div className=" absolute right-0">
+                <SignaledUsers />
+              </div>
+            )}
             <Link href={`/profile/${author.id}`} className="w-fit">
               <h4 className="cursor-pointer text-base-semibold text-light-1 mt-2.5">
                 {author.name}
@@ -86,7 +92,12 @@ function ThreadCard({
 
             <p className="mt-2 text-small-regular text-light-2 ">{content}</p>
 
-            {theadImage && <ShowImage theadImage={theadImage} />}
+            {!isComment && (
+              <div className="mt-3">
+                {theadImage && <ShowImage theadImage={theadImage} />}
+              </div>
+            )}
+
             {/* <ShowImage theadImage={theadImage} /> */}
 
             <div className={`${isComment && "mb-10"} mt-5 flex flex-col gap-3`}>
