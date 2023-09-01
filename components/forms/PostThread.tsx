@@ -37,6 +37,7 @@ function PostThread({ userId }: Props) {
 
   const [files, setFiles] = useState<File[]>([]);
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
+  const [isLoading, setIsLoading] = useState(false); // Ajoutez cet état
 
   const displayErrorMessage = (message: string) => {
     setErrorMessage(message);
@@ -54,31 +55,10 @@ function PostThread({ userId }: Props) {
     },
   });
 
-  const handleImage = (
-    e: ChangeEvent<HTMLInputElement>,
-    fieldChange: (value: string | undefined) => void
-  ) => {
-    e.preventDefault();
-
-    const fileReader = new FileReader();
-
-    if (e.target.files && e.target.files.length > 0) {
-      const file = e.target.files[0];
-      setFiles(Array.from(e.target.files));
-
-      if (!file.type.includes("image")) return;
-
-      fileReader.onload = async (event) => {
-        const imageDataUrl = event.target?.result?.toString() || "";
-        fieldChange(imageDataUrl);
-      };
-
-      fileReader.readAsDataURL(file);
-    }
-  };
-
   const onSubmit = async (values: z.infer<typeof ThreadValidation>) => {
     try {
+      setIsLoading(true); // Activer isLoading lors de la soumission
+
       const blob = values.theadImage;
 
       const hasImageChanged = isBase64Image(blob);
@@ -104,6 +84,8 @@ function PostThread({ userId }: Props) {
       displayErrorMessage(
         "Une erreur s'est produite lors de la création du thread. Veuillez réessayer plus tard."
       );
+    } finally {
+      setIsLoading(false); // Désactiver isLoading après la soumission
     }
   };
 
@@ -126,13 +108,12 @@ function PostThread({ userId }: Props) {
       fileReader.onload = async (event) => {
         const imageDataUrl = event.target?.result?.toString() || "";
         fieldChange(imageDataUrl);
-        setPreviewImage(imageDataUrl);
+        setPreviewImage(imageDataUrl); // Mettez à jour previewImage ici
       };
 
       fileReader.readAsDataURL(file);
     }
   };
-
   return (
     <Form {...form}>
       <form
@@ -167,7 +148,7 @@ function PostThread({ userId }: Props) {
                     src={previewImage}
                     alt="Preview"
                     layout="responsive"
-                    width={300}
+                    width={230}
                     height={100}
                     className="rounded-md"
                   />
@@ -178,8 +159,12 @@ function PostThread({ userId }: Props) {
           )}
         />
 
-        <Button type="submit" className="bg-primary-500">
-          Créer
+        <Button
+          type="submit"
+          className="bg-primary-500"
+          disabled={isLoading} // Désactiver le bouton lors du chargement
+        >
+          {isLoading ? "Chargement..." : "Créer"}
         </Button>
       </form>
     </Form>

@@ -49,9 +49,7 @@ function SignaledUsers({ username }: { username: string }) {
         </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent align="center">
-        <DropdownMenuLabel>Action</DropdownMenuLabel>
         {/* <DropdownMenuItem>Copy payment ID</DropdownMenuItem> */}
-        <DropdownMenuSeparator />
         <AlertDialog>
           <AlertDialogTrigger asChild>
             <Button variant="outline" disabled={isSendingEmail}>

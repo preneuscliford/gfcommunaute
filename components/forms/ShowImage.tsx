@@ -18,7 +18,7 @@ function ShowImage({ theadImage }: Props) {
 
   return (
     <div
-      className={`cursor-pointer  ${fullscreen ? "fullScreen bg-black  " : ""}`}
+      className={`cursor-pointe ${fullscreen ? "fullScreen bg-black  " : ""}`}
       onClick={toggleFullscreen}
     >
       <div>
@@ -34,11 +34,12 @@ function ShowImage({ theadImage }: Props) {
         />
       </div>
       <Image
-        className="rounded-md mt-2 "
+        className={`rounded-md mt-2 ${fullscreen ? "test  " : ""}`}
+        width={100}
+        height={100}
         src={theadImage}
         alt="thread_image"
-        width={500}
-        height={300}
+        layout="responsive"
       />
     </div>
   );

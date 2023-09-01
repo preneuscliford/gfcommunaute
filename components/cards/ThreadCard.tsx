@@ -8,6 +8,7 @@ import DeleteThread from "../forms/DeleteThread";
 import LikeButton from "../forms/LikeButton";
 import ShowImage from "../forms/ShowImage";
 import SignaledUsers from "../forms/SignaledUsers";
+import { threadId } from "worker_threads";
 
 interface Props {
   id: string;
@@ -81,7 +82,7 @@ function ThreadCard({
           <div className="flex w-full flex-col relative">
             {author.id !== currentUserId && (
               <div className=" absolute right-0">
-                <SignaledUsers />
+                <SignaledUsers username={author.name} />
               </div>
             )}
             <Link href={`/profile/${author.id}`} className="w-fit">
