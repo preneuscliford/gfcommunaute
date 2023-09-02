@@ -8,14 +8,16 @@ import { Button } from "../ui/button";
 interface Props {
   id: string;
   name: string;
+  role: string;
   username: string;
   imgUrl: string;
   personType: string;
 }
 
-function UserCard({ id, name, username, imgUrl, personType }: Props) {
+function UserCard({ id, name, role, username, imgUrl, personType }: Props) {
   const router = useRouter();
 
+  console.log(id);
   const isCommunity = personType === "Community";
 
   return (
@@ -31,7 +33,19 @@ function UserCard({ id, name, username, imgUrl, personType }: Props) {
         </div>
 
         <div className="flex-1 text-ellipsis">
-          <h4 className="text-base-semibold text-light-1">{name}</h4>
+          <div className=" flex items-center">
+            <h4 className="text-base-semibold text-light-1">{name}</h4>
+            {role === "verified" && (
+              <Image
+                className=" w-6 h-6"
+                src="/assets/verified-svg.svg"
+                alt="verified image"
+                width={16}
+                height={16}
+              />
+            )}
+          </div>
+
           <p className="text-small-medium text-gray-1">@{username}</p>
         </div>
       </div>

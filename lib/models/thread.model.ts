@@ -9,6 +9,7 @@ const threadSchema = new mongoose.Schema({
   author: {
     type: mongoose.Schema.Types.ObjectId,
     ref: "User",
+    role: "User.role",
     required: true,
   },
   theadImage: {

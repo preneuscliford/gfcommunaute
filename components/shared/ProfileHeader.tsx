@@ -9,6 +9,7 @@ interface Props {
   authUserId: string;
   name: string;
   username: string;
+  role: string;
   imgUrl: string;
   bio: string;
   type?: string;
@@ -17,6 +18,7 @@ interface Props {
 function ProfileHeader({
   accountId,
   authUserId,
+  role,
   name,
   username,
   imgUrl,
@@ -44,9 +46,21 @@ function ProfileHeader({
           )}
 
           <div className="flex-1">
-            <h2 className="text-left text-heading3-bold text-light-1">
-              {name}
-            </h2>
+            <div className="flex justify-center items-center">
+              <h2 className="text-left text-heading3-bold text-light-1">
+                {name}
+              </h2>
+              {role === "verified" && (
+                <Image
+                  className=" w-6 h-6"
+                  src="/assets/verified-svg.svg"
+                  alt="verified image"
+                  width={16}
+                  height={16}
+                />
+              )}
+            </div>
+
             <p className="text-base-medium text-gray-1">@{username}</p>
           </div>
         </div>

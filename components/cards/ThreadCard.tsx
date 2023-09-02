@@ -8,7 +8,7 @@ import DeleteThread from "../forms/DeleteThread";
 import LikeButton from "../forms/LikeButton";
 import ShowImage from "../forms/ShowImage";
 import SignaledUsers from "../forms/SignaledUsers";
-import { threadId } from "worker_threads";
+import { log } from "console";
 
 interface Props {
   id: string;
@@ -20,6 +20,7 @@ interface Props {
     name: string;
     image: string;
     id: string;
+    role: string;
   };
   community: {
     id: string;
@@ -55,6 +56,8 @@ function ThreadCard({
     "America/Cayenne"
   );
 
+  console.log(author.role);
+
   const formattedDate = formatDateString(dateInGuyaneTimezone.toISOString());
 
   return (
@@ -85,12 +88,22 @@ function ThreadCard({
                 <SignaledUsers username={author.name} />
               </div>
             )}
-            <Link href={`/profile/${author.id}`} className="w-fit">
-              <h4 className="cursor-pointer text-base-semibold text-light-1 mt-2.5">
-                {author.name}
-              </h4>
-            </Link>
-
+            <div className=" flex items-center  mt-2.5">
+              <Link href={`/profile/${author.id}`} className="w-fit">
+                <h4 className="cursor-pointer text-base-semibold text-light-1">
+                  {author.name}
+                </h4>
+              </Link>
+              {author.role === "verified" && (
+                <Image
+                  className=" w-6 h-6"
+                  src="/assets/verified-svg.svg"
+                  alt="verified image"
+                  width={16}
+                  height={16}
+                />
+              )}
+            </div>
             <p className="mt-2 text-small-regular text-light-2 ">{content}</p>
 
             {!isComment && (

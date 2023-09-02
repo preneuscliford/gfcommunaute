@@ -12,6 +12,7 @@ async function RightSidebar() {
   const similarMinds = await fetchUsers({
     userId: user.id,
     pageSize: 4,
+    role: "verified",
   });
 
   const suggestedCOmmunities = await fetchCommunities({ pageSize: 4 });
@@ -32,6 +33,7 @@ async function RightSidebar() {
                   username={community.username}
                   imgUrl={community.image}
                   personType="Community"
+                  role={"verified"}
                 />
               ))}
             </>
@@ -56,6 +58,7 @@ async function RightSidebar() {
                   username={person.username}
                   imgUrl={person.image}
                   personType="User"
+                  role={person.role}
                 />
               ))}
             </>

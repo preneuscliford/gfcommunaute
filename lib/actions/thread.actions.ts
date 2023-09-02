@@ -52,6 +52,7 @@ interface Params {
   text: string;
   theadImage: string;
   author: string;
+  role: string;
   communityId: string | null;
   path: string;
 }
@@ -60,6 +61,7 @@ export async function createThread({
   text,
   theadImage,
   author,
+  role,
   communityId,
   path,
 }: Params) {
@@ -74,6 +76,7 @@ export async function createThread({
     const createdThread = await Thread.create({
       text,
       author,
+      role,
       community: communityIdObject,
       theadImage,
 

@@ -26,6 +26,7 @@ interface Params {
   userId: string;
   bio: string;
   name: string;
+  role: String;
   path: string;
   username: string;
   image: string;
@@ -35,6 +36,7 @@ export async function updateUser({
   userId,
   bio,
   name,
+  role,
   path,
   username,
   image,
@@ -47,6 +49,7 @@ export async function updateUser({
       {
         username: username.toLowerCase(),
         name,
+        role,
         bio,
         image,
         onboarded: true,
@@ -103,6 +106,7 @@ export async function fetchUsers({
   sortBy = "desc",
 }: {
   userId: string;
+  role: string;
   searchString?: string;
   pageNumber?: number;
   pageSize?: number;

@@ -18,6 +18,7 @@ interface Result {
       name: string;
       image: string;
       id: string;
+      role: string;
     };
     community: {
       id: string;
@@ -64,11 +65,17 @@ async function ThreadsTab({ currentUserId, accountId, accountType }: Props) {
           theadImage={thread.theadImage}
           author={
             accountType === "User"
-              ? { name: result.name, image: result.image, id: result.id }
+              ? {
+                  name: result.name,
+                  image: result.image,
+                  id: result.id,
+                  role: thread.author.role,
+                }
               : {
                   name: thread.author.name,
                   image: thread.author.image,
                   id: thread.author.id,
+                  role: thread.author.role,
                 }
           }
           community={

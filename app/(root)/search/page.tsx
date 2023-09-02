@@ -23,6 +23,7 @@ async function Page({
     searchString: searchParams.q,
     pageNumber: searchParams?.page ? +searchParams.page : 1,
     pageSize: 25,
+    role: "verified",
   });
 
   return (
@@ -43,6 +44,7 @@ async function Page({
                 name={person.name}
                 username={person.username}
                 imgUrl={person.image}
+                role={person.role}
                 personType="User"
               />
             ))}
