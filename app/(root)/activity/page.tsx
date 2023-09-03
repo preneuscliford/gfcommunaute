@@ -35,16 +35,14 @@ async function Page() {
                     <span className="mr-1 text-primary-500">
                       {activity.author.name}
                     </span>{" "}
-                    a commenté à ton post.
+                    A commenté sur votre publication
                   </p>
                 </article>
               </Link>
             ))}
           </>
         ) : (
-          <p className="p-4 text-slate-50 text-base-regular max-lg:hidden">
-            terms et politique de confidentialite
-          </p>
+          <p className="p-4 text-slate-50 text-base-regular max-lg:hidden"></p>
         )}
       </section>
     </>

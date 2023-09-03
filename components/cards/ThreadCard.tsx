@@ -32,6 +32,7 @@ interface Props {
   comments: {
     author: {
       image: string;
+      name: string;
     };
   }[];
   isComment?: boolean;
@@ -55,8 +56,7 @@ function ThreadCard({
     new Date(createdAt),
     "America/Cayenne"
   );
-
-  console.log(author.role);
+  console.log(comments);
 
   const formattedDate = formatDateString(dateInGuyaneTimezone.toISOString());
 
@@ -155,7 +155,6 @@ function ThreadCard({
                   className="cursor-pointer object-contain"
                 /> */}
               </div>
-
               {isComment && comments.length > 0 && (
                 <Link href={`/thread/${id}`}>
                   {formatDateString(createdAt)}
@@ -183,14 +182,18 @@ function ThreadCard({
       {!isComment && comments.length > 0 && (
         <div className="ml-1 mt-3 flex items-center gap-2">
           {comments.slice(0, 2).map((comment, index) => (
-            <Image
-              key={index}
-              src={comment.author.image}
-              alt={`user_${index}`}
-              width={24}
-              height={24}
-              className={`${index !== 0 && "-ml-5"} rounded-full object-cover`}
-            />
+            <div key={index}>
+              <Image
+                key={index}
+                src={comment.author.image}
+                alt={`user_${index}`}
+                width={24}
+                height={24}
+                className={`${
+                  index !== 0 && "-ml-5"
+                } rounded-full object-cover`}
+              />
+            </div>
           ))}
 
           <Link href={`/thread/${id}`}>

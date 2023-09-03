@@ -16,7 +16,7 @@ async function Page() {
     <>
       <h1 className="head-text">Créer un fil de discussion</h1>
 
-      <PostThread userId={userInfo._id} />
+      <PostThread userId={userInfo._id} theadImage={""} />
     </>
   );
 }
