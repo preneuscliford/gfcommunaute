@@ -104,6 +104,7 @@ export async function fetchUsers({
   pageNumber = 1,
   pageSize = 20,
   sortBy = "desc",
+  role,
 }: {
   userId: string;
   role: string;

@@ -4,6 +4,7 @@ import UserCard from "../cards/UserCard";
 
 import { fetchCommunities } from "@/lib/actions/community.actions";
 import { fetchUsers } from "@/lib/actions/user.actions";
+import { userInfo } from "os";
 
 async function RightSidebar() {
   const user = await currentUser();
@@ -12,7 +13,7 @@ async function RightSidebar() {
   const similarMinds = await fetchUsers({
     userId: user.id,
     pageSize: 4,
-    role: "verified",
+    role: "",
   });
 
   const suggestedCOmmunities = await fetchCommunities({ pageSize: 4 });
@@ -33,7 +34,7 @@ async function RightSidebar() {
                   username={community.username}
                   imgUrl={community.image}
                   personType="Community"
-                  role={"verified"}
+                  role={community.members.role}
                 />
               ))}
             </>

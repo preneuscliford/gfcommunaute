@@ -1,14 +1,13 @@
 import Image from "next/image";
 import Link from "next/link";
 
-import { utcToZonedTime } from "date-fns-tz";
+import { utcToZonedTime, format } from "date-fns-tz";
 
 import { formatDateString } from "@/lib/utils";
 import DeleteThread from "../forms/DeleteThread";
 import LikeButton from "../forms/LikeButton";
 import ShowImage from "../forms/ShowImage";
 import SignaledUsers from "../forms/SignaledUsers";
-import { log } from "console";
 
 interface Props {
   id: string;
@@ -21,6 +20,7 @@ interface Props {
     image: string;
     id: string;
     role: string;
+    accountType: string;
   };
   community: {
     id: string;
@@ -56,10 +56,13 @@ function ThreadCard({
     new Date(createdAt),
     "America/Cayenne"
   );
-  console.log(comments);
 
-  const formattedDate = formatDateString(dateInGuyaneTimezone.toISOString());
+  const formattedDate = format(dateInGuyaneTimezone, "HH:mm - dd/MM/yyyy ", {
+    timeZone: "America/Cayenne",
+  });
 
+  console.log(formattedDate);
+  const isIndividualUser = author.accountType === "individual";
   return (
     <article
       className={`flex w-full flex-col rounded-xl  ${
@@ -94,15 +97,16 @@ function ThreadCard({
                   {author.name}
                 </h4>
               </Link>
-              {author.role === "verified" && (
+              {(author.role === "verified" && !community) ||
+              (author.role === "verified" && community?.id) ? (
                 <Image
-                  className=" w-6 h-6"
+                  className="w-6 h-6"
                   src="/assets/verified-svg.svg"
                   alt="verified image"
                   width={16}
                   height={16}
                 />
-              )}
+              ) : null}
             </div>
             <p className="mt-2 text-small-regular text-light-2 ">{content}</p>
 
@@ -218,7 +222,7 @@ function ThreadCard({
         >
           <p className="text-subtle-medium text-light-1">
             {formattedDate}
-            {community && ` - ${community.name} Community`}
+            {community && ` - ${community.name} Communauté`}
           </p>
 
           <Image
