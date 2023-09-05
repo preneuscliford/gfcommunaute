@@ -32,7 +32,7 @@ export async function fetchPosts(pageNumber = 1, pageSize = 20) {
       populate: {
         path: "author", // Populate the author field within children
         model: User,
-        select: "_id name parentId image", // Select only _id and username fields of the author
+        select: "_id name parentId image role", // Select only _id and username fields of the author
       },
     });
 
@@ -50,11 +50,11 @@ export async function fetchPosts(pageNumber = 1, pageSize = 20) {
 
 interface Params {
   text: string;
-  theadImage: string;
   author: string;
-  role: string;
   communityId: string | null;
   path: string;
+  theadImage: string;
+  role: string;
 }
 
 export async function createThread({
@@ -177,17 +177,30 @@ export async function fetchThreadById(threadId: string) {
       .populate({
         path: "author",
         model: User,
-        select: "_id id name image",
-      })
+        select: "_id id name image role",
+      }) // Populate the author field with _id and username
       .populate({
         path: "community",
         model: Community,
-        select: "_id id name image",
-      })
+        select: "_id id name image role",
+      }) // Populate the community field with _id and name
       .populate({
-        path: "children",
+        path: "children", // Populate the children field
         populate: [
-          // ... autres champs existants
+          {
+            path: "author", // Populate the author field within children
+            model: User,
+            select: "_id id name parentId image role", // Select only _id and username fields of the author
+          },
+          {
+            path: "children", // Populate the children field within children
+            model: Thread, // The model of the nested children (assuming it's the same "Thread" model)
+            populate: {
+              path: "author", // Populate the author field within nested children
+              model: User,
+              select: "_id id name parentId image role", // Select only _id and username fields of the author
+            },
+          },
         ],
       })
       .exec();
@@ -238,12 +251,6 @@ export async function addCommentToThread(
   }
 }
 
-// ...
-
-// ...
-
-// ...  it's wprkk
-
 export async function addLikeToThread(
   threadId: string,
   userId: string,
@@ -286,5 +293,3 @@ export async function addLikeToThread(
     throw new Error(`Failed to update like for thread: ${error.message}`);
   }
 }
-
-// ...

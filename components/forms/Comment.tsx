@@ -24,6 +24,7 @@ interface Props {
   threadId: string;
   currentUserImg: string;
   currentUserId: string;
+  role: string;
 }
 
 function Comment({ threadId, currentUserImg, currentUserId }: Props) {
@@ -40,7 +41,7 @@ function Comment({ threadId, currentUserImg, currentUserId }: Props) {
     await addCommentToThread(
       threadId,
       values.thread,
-      JSON.parse(currentUserId),
+      JSON.parse(currentUserId), // Assurez-vous que currentUserId est correct
       pathname
     );
 

@@ -12,7 +12,6 @@ interface Result {
   threads: {
     _id: string;
     text: string;
-    theadImage: string;
     parentId: string | null;
     author: {
       name: string;
@@ -29,6 +28,7 @@ interface Result {
     children: {
       author: {
         image: string;
+        role: string;
       };
     }[];
   }[];
@@ -62,7 +62,7 @@ async function ThreadsTab({ currentUserId, accountId, accountType }: Props) {
           currentUserId={currentUserId}
           parentId={thread.parentId}
           content={thread.text}
-          theadImage={thread.theadImage}
+          role={thread.author.role}
           author={
             accountType === "User"
               ? {
@@ -85,7 +85,6 @@ async function ThreadsTab({ currentUserId, accountId, accountType }: Props) {
           }
           createdAt={thread.createdAt}
           comments={thread.children}
-          likes={0}
         />
       ))}
     </section>

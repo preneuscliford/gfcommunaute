@@ -59,10 +59,11 @@ function SignaledUsers({ username }: { username: string }) {
           <AlertDialogContent>
             <AlertDialogHeader>
               <AlertDialogTitle>
-                Voulez-vous vraiment signaler cet utilisateur?
+                Confirmez-vous votre intention de signaler cet utilisateur ?
               </AlertDialogTitle>
               <AlertDialogDescription>
-                This will notify the administrators for further action.
+                Cette action sera notifiée aux administrateurs pour prise de
+                mesures appropriées.
               </AlertDialogDescription>
             </AlertDialogHeader>
             <AlertDialogFooter>

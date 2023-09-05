@@ -18,6 +18,8 @@ async function page({ params }: { params: { id: string } }) {
   const userInfo = await fetchUser(user.id);
   if (!userInfo?.onboarded) redirect("/onboarding");
 
+  console.log(userInfo);
+
   const thread = await fetchThreadById(params.id);
 
   return (
@@ -42,6 +44,7 @@ async function page({ params }: { params: { id: string } }) {
           threadId={params.id}
           currentUserImg={userInfo.image}
           currentUserId={JSON.stringify(userInfo._id)}
+          role={userInfo.role}
         />
       </div>
 

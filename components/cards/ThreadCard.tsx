@@ -8,6 +8,7 @@ import DeleteThread from "../forms/DeleteThread";
 import LikeButton from "../forms/LikeButton";
 import ShowImage from "../forms/ShowImage";
 import SignaledUsers from "../forms/SignaledUsers";
+import VerifyIcon from "../forms/VerifyIcon";
 
 interface Props {
   id: string;
@@ -15,6 +16,7 @@ interface Props {
   parentId: string | null;
   content: string;
   theadImage: string;
+
   author: {
     name: string;
     image: string;
@@ -32,7 +34,7 @@ interface Props {
   comments: {
     author: {
       image: string;
-      name: string;
+      role: string;
     };
   }[];
   isComment?: boolean;
@@ -61,8 +63,6 @@ function ThreadCard({
     timeZone: "America/Cayenne",
   });
 
-  console.log(formattedDate);
-  const isIndividualUser = author.accountType === "individual";
   return (
     <article
       className={`flex w-full flex-col rounded-xl  ${
@@ -97,16 +97,8 @@ function ThreadCard({
                   {author.name}
                 </h4>
               </Link>
-              {(author.role === "verified" && !community) ||
-              (author.role === "verified" && community?.id) ? (
-                <Image
-                  className="w-6 h-6"
-                  src="/assets/verified-svg.svg"
-                  alt="verified image"
-                  width={16}
-                  height={16}
-                />
-              ) : null}
+
+              <VerifyIcon role={author.role} />
             </div>
             <p className="mt-2 text-small-regular text-light-2 ">{content}</p>
 
@@ -188,7 +180,6 @@ function ThreadCard({
           {comments.slice(0, 2).map((comment, index) => (
             <div key={index}>
               <Image
-                key={index}
                 src={comment.author.image}
                 alt={`user_${index}`}
                 width={24}
