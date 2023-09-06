@@ -8,6 +8,7 @@ import LikeButton from "../forms/LikeButton";
 import ShowImage from "../forms/ShowImage";
 import SignaledUsers from "../forms/SignaledUsers";
 import VerifyIcon from "../forms/VerifyIcon";
+import { formatDateString } from "@/lib/utils";
 
 interface Props {
   id: string;
@@ -194,12 +195,19 @@ function ThreadCard({
         </div>
       )}
 
+      {!isComment && !community && (
+        <p className="text-subtle-medium text-gray-1 mt-3">
+          {formatDateString(createdAt)}
+        </p>
+      )}
+
       {!isComment && community && (
         <Link
           href={`/communities/${community.id}`}
           className="mt-5 flex items-center"
         >
           <p className="text-subtle-medium text-gray-1">
+            {formatDateString(createdAt)}
             {community && ` - ${community.name} Communauté`}
           </p>
 

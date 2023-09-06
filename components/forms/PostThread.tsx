@@ -22,6 +22,7 @@ import { ChangeEvent, useState } from "react";
 import { useUploadThing } from "@/lib/uploadthing";
 import { isBase64Image } from "@/lib/utils";
 import Image from "next/image";
+import { userInfo } from "os";
 
 interface Props {
   userId: string;
@@ -76,6 +77,7 @@ function PostThread({ userId }: Props) {
         communityId: organization ? organization.id : null,
         path: pathname,
         theadImage: values.theadImage || "",
+        role: "",
       });
 
       router.push("/");

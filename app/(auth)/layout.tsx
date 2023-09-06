@@ -7,6 +7,7 @@ import { frFR } from "@clerk/localizations";
 
 import "../globals.css";
 import { ThemeProvider } from "@/components/theme-provider";
+import Image from "next/image";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -28,12 +29,12 @@ export default async function RootLayout({
       }}
     >
       <html lang="fr">
-        <body
-          className={`${inter.className} bg-dark-1 flex items-center justify-center`}
-        >
-          <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
-            {children}
-          </ThemeProvider>
+        <body className={`${inter.className} bg-dark-1 `}>
+          <section className=" flex items-center justify-center">
+            <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
+              {children}
+            </ThemeProvider>
+          </section>
         </body>
       </html>
     </ClerkProvider>
