@@ -17,7 +17,6 @@ interface Props {
 function UserCard({ id, name, role, username, imgUrl, personType }: Props) {
   const router = useRouter();
 
-  console.log(id);
   const isCommunity = personType === "Community";
 
   return (
@@ -54,9 +53,9 @@ function UserCard({ id, name, role, username, imgUrl, personType }: Props) {
         className="user-card_btn"
         onClick={() => {
           if (isCommunity) {
-            router.push(`/communities/${id}`);
+            router.push(`/communautes/${id}`);
           } else {
-            router.push(`/profile/${id}`);
+            router.push(`/profil/${id}`);
           }
         }}
       >

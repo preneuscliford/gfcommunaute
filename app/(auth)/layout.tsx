@@ -29,8 +29,8 @@ export default async function RootLayout({
       }}
     >
       <html lang="fr">
-        <body className={`${inter.className} bg-dark-1 `}>
-          <section className=" flex items-center justify-center">
+        <body className={`${inter.className} custom-img h-screen  bg-center `}>
+          <section className="  flex items-center justify-center h-screen bg-fixed bg-center ">
             <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
               {children}
             </ThemeProvider>

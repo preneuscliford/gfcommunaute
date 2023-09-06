@@ -9,6 +9,7 @@ import ShowImage from "../forms/ShowImage";
 import SignaledUsers from "../forms/SignaledUsers";
 import VerifyIcon from "../forms/VerifyIcon";
 import { formatDateString } from "@/lib/utils";
+import frLocale from "date-fns/locale/fr";
 
 interface Props {
   id: string;
@@ -59,8 +60,9 @@ function ThreadCard({
     "America/Cayenne"
   );
 
-  const formattedDate = format(dateInGuyaneTimezone, "HH:mm - dd/MM/yyyy ", {
+  const formattedDate = format(dateInGuyaneTimezone, "HH:mm - dd MMM yyyy", {
     timeZone: "America/Cayenne",
+    locale: frLocale, // Utilisez le paquet de localisation français
   });
 
   return (
@@ -72,7 +74,7 @@ function ThreadCard({
       <div className="flex items-start justify-between">
         <div className="flex w-full flex-1 flex-row gap-2">
           <div className="flex flex-col items-center">
-            <Link href={`/profile/${author.id}`} className="relative h-11 w-11">
+            <Link href={`/profil/${author.id}`} className="relative h-11 w-11">
               <Image
                 src={author.image}
                 alt="user_community_image"
@@ -92,7 +94,7 @@ function ThreadCard({
               </div>
             )}
             <div className=" flex items-center  mt-2.5">
-              <Link href={`/profile/${author.id}`} className="w-fit">
+              <Link href={`/profil/${author.id}`} className="w-fit">
                 <h4 className="cursor-pointer text-base-semibold text-light-1">
                   {author.name}
                 </h4>
@@ -122,7 +124,7 @@ function ThreadCard({
                 />
 
                 <Link
-                  href={`/thread/${id}`}
+                  href={`/post/${id}`}
                   className="flex justify-center items-center"
                 >
                   <Image
@@ -152,7 +154,7 @@ function ThreadCard({
                 /> */}
               </div>
               {isComment && comments.length > 0 && (
-                <Link href={`/thread/${id}`}>
+                <Link href={`/post/${id}`}>
                   <p className="mt-1 text-subtle-medium text-gray-1">
                     {comments.length} répons
                     {comments.length > 1 ? "es" : "e"}
@@ -187,7 +189,7 @@ function ThreadCard({
             />
           ))}
 
-          <Link href={`/thread/${id}`}>
+          <Link href={`/post/${id}`}>
             <p className="mt-1 text-subtle-medium text-gray-1">
               {comments.length} répons{comments.length > 1 ? "es" : "e"}
             </p>
@@ -196,9 +198,7 @@ function ThreadCard({
       )}
 
       {!isComment && !community && (
-        <p className="text-subtle-medium text-gray-1 mt-3">
-          {formatDateString(createdAt)}
-        </p>
+        <p className="text-subtle-medium text-gray-1 mt-3">{formattedDate}</p>
       )}
 
       {!isComment && community && (
@@ -207,7 +207,7 @@ function ThreadCard({
           className="mt-5 flex items-center"
         >
           <p className="text-subtle-medium text-gray-1">
-            {formatDateString(createdAt)}
+            {formattedDate}
             {community && ` - ${community.name} Communauté`}
           </p>
 

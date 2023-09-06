@@ -90,7 +90,7 @@ const AccountProfile = ({ user, btnTitle }: Props) => {
         role: user.role,
       });
 
-      if (pathname === "/profile/edit") {
+      if (pathname === "/profil/edit") {
         router.back();
       } else {
         router.push("/");

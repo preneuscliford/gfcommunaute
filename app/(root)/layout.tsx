@@ -16,7 +16,7 @@ import { ThemeProvider } from "@/components/theme-provider";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  title: "Threads",
+  title: "GFcom",
   description: "A Next.js 13 Meta Threads application",
   manifest: "./manifest.json",
 };

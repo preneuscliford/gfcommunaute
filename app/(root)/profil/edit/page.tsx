@@ -28,7 +28,7 @@ async function Page() {
       <h1 className="head-text">Éditez votre profil.</h1>
 
       <section className="mt-12">
-        <AccountProfile user={userData} btnTitle="Continue" />
+        <AccountProfile user={userData} btnTitle="Continuer" />
       </section>
     </>
   );
