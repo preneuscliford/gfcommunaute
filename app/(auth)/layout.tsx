@@ -7,7 +7,6 @@ import { frFR } from "@clerk/localizations";
 
 import "../globals.css";
 import { ThemeProvider } from "@/components/theme-provider";
-import Image from "next/image";
 
 const inter = Inter({ subsets: ["latin"] });
 

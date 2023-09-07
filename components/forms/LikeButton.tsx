@@ -61,7 +61,7 @@ const LikeButton = ({ threadId, userId, likedBy }: Props) => {
     <div className=" flex justify-center items-center gap-1">
       <div onClick={handleLike}>
         <Image
-          src={`/assets/heart.png`}
+          src={isLiked ? "/assets/like2.png" : "/assets/like1.png"}
           alt="heart"
           width={24}
           height={24}
