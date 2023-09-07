@@ -1,11 +1,12 @@
 {
-    "theme_color": "#4b74f2",
-    "background_color": "#223134",
+    "theme_color": "#877EFF",
+    "background_color": "#121417",
     "display": "standalone",
     "scope": "/",
     "start_url": "/",
-    "name": "SDK App",
-    "short_name": "SDK",
+    "description": "Guyane Interconnect\u00e9e (GIT) : C\u00e9l\u00e9brez la diversit\u00e9 guyanaise en ligne. Partagez, \u00e9changez et connectez vous avec la Guyane.",
+    "name": "Guyane Interconnect\u00e9e",
+    "short_name": "GIT",
     "icons": [
         {
             "src": "/icon-192x192.png",

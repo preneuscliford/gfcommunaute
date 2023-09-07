@@ -16,8 +16,9 @@ import { ThemeProvider } from "@/components/theme-provider";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  title: "GFcom",
-  description: "A Next.js 13 Meta Threads application",
+  title: "Git",
+  description:
+    "Guyane Interconnectée (GIT) : Célébrez la diversité de la guyane en ligne. Partagez, échangez et connectez-vous avec la Guyane. Rejoignez-nous maintenant !",
   manifest: "./manifest.json",
 };
 
